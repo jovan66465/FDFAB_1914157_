@@ -1,0 +1,162 @@
+<!DOCTYPE html>	
+<html>
+
+	<head>
+		<title>My website</title>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+	</head>
+
+	<body>
+		<div id="container" width="800">
+
+			<div id="header">
+			<h1>Welcome to my website!</h1>
+			</div>
+    
+            <div id="content">
+                <div id="nav">
+				<h3>Navigation</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="01-fblbsfty.html">FabLab Safety</a></li>
+                        <li><a href="02-webdev.html">Web development</a></li>
+                        <li><a href="03-cad.html">Computer Aided Design</a></li>
+                        <li><a class="selected" href="">3D Printing</aa></li>
+                        <li><a href="05-lsrcutting.html">Laser Cutting</a></li>
+                        <li><a href="06-embeddedprog.html">Embedded programming (Arduino)</a></li>
+                        <li><a href="07-finalproject.html">Final DFAB project</a></li>
+
+
+                    </ul>
+                </div>
+
+				<div id="main">
+				    <h2>3D Printing</h2>
+                    
+                        <h3>
+                            Printer calibration:
+                        </h3>
+                            Before printing on a new printer/ extruder, a few things have to be done to ensure that prints come out decently.
+                    
+                        <ul>
+                            <li>
+                                Firstly, the bed needs to be leveled to ensure that the nozzle is able to place down a perfect first layer of plastic. Although some higher end printers may have an automatic bed leveling system like the BLtouch, both the school printer (makerbot replicator v2) and my printer (ender 3) do not come equipped with these.
+                            </li>
+                            
+                            <li>
+                                Secondly, the extruder needs to be calibrated to ensure that the correct amount of material is extruded through the nozzle. This can be one of the most important steps as most aspects of printing rely on the correct amount of plastic being extruded. As such, it can determine if your print looks like intended.
+                            </li>
+                            
+                        </ul>
+
+                        <h3>
+                            Slicer settings:
+                        </h3>
+                    
+                        <p>
+                            Layer height:
+                            This determines how thick each layer is. The thicker the layer height, the faster the print is completed, however, it can leave thick layer lines on the surface of the print.
+                        </p>
+                            
+                        <p>
+                            <img src="pics/layerheights-1.jpg" alt="http://3dprototypesandmodels.com.au/3d-printing-terminology-specifications/" width="500">
+                        </p>
+                    
+                        <p>
+                            Infill percentage:
+                        </p>
+                        
+                        <p>
+                            This parameter determines how dense the inside (infill) of the model will be. The higher the infill, the stronger and heavier the print. On the other hand, a higher infill percentage will result in a longer print time and higher filament usage. Thus, a low percentage (15%) is usually used for most prints that don't need the added strength.
+                            <br>
+                            By using the per model function in cura, i varied the infill percentage for these 4 cylinders. I got an open top by setting top layers to zero.
+                            
+                            <img src="pics/infilldemo0.PNG" alt="cura0" width="250">
+                            <img src="pics/infilldemo1.PNG" alt="cura1" width="250">
+                            <img src="pics/infilldemo3.jpeg" alt="cura3" width="250">
+                            <img src="pics/infilldemo4.jpeg" alt="cura4" width="250">
+                            <img src="pics/ender3.gif" alt="cura5" width="500">
+
+
+
+                        
+                            
+                        </p>
+                    
+                        <p>
+                            It is worth noting that vase mode (spiralise outer contour) can reduce print time even more in situations where infill is not required. This mode is can also be used to calibrate line width for a printer by printing a completely hollow cube.
+                            
+                            <img src="pics/vasemode.jpeg" alt="PIC SHOWING vase mode" width="250">
+
+                        </p>
+                    
+                        <p>
+                            Supports: (info about overhangs and tree and normal supports)
+                        </p>
+                    
+                        <p>
+                            A FDM system lays down plastic layer by layer to produce an object. This means that printers need support structure to print steep overhangs, typically more than 45 degrees, since printing over thin air can lead to unsightly sagging strands.<br>
+                            This is different from bridging, where the plastic is 'stretched over a distance' rather than printing in mid air. As such, it is supported on both ends unlike overhangs.<br>
+                            So, how do we improve the overhang performance of a printer?
+                            <ul>
+                                <li>Firstly, we can make the plastic cool faster by either increasing cooling or using a thinner layer height. Since there is less plastic to cool down, the plastic cools faster and exhibits less sag.</li>
+                                <li>Secondly, we can use a lower printing speed to allow more time for the extruded plastic to be cooled from the part cooling fan. There is also a setting from Cura 4.8 that allows for the printer to wait for a certain time before proceeding to the next layer. This may be useful for certain materials like TPU that tend to remain pliable for longer.</li>
+                            </ul>
+                        </p>
+                    
+                        <p>
+                            Bed adhesion: (info about rafts, brim, skirt)
+                        </p>
+                    
+                        
+                    
+                        <h3>
+                            Printing PLA:
+                        </h3>
+                    
+                        <p>Below: printing on the school printer</p>
+                        <p><img src="pics/3dprint2.jpg" alt="placeholder" width="250"></p>
+                    
+                        <p>
+                            As we can see, the high print speed caused the overhangs on the ball to fail partially, resulting in a gap of a few layers in the skin. I think this was the result of underextrusion from the lack of tuning (This was the default cura profile for the ultimaker
+                        </p>
+                    
+                        <p><img src="pics/3dprint4.jpg" alt="placeholder" width="250"></p>
+                    
+                        <p>I also chose to use a raft since it pops off in once as compared to brims, which require a knife to remove cleanly</p>
+                        <p><img src="pics/3dprint3.jpg" alt="placeholder" width="250"></p>
+                    
+                        <p>This is a pawn piece printed on my personal printer. Tuning in the print temperature allowed me to print with minimal stringing</p>
+                        <p><img src="pics/3dprint5.jpg" alt="placeholder" width="250"></p>
+                    
+                        <p>After removing the supports,</p>
+                        <p><img src="pics/3dprint6.jpg" alt="placeholder" width="250"></p>
+            
+                        <h3>Printing TPU: </h3>
+                        <p>
+                            What i learned from experimentation is that TPU needs to be printed slow (around 20mm/s) on bowden setups, otherwise the flexible filament may come out of the extruder assembly and cause a print failure. It also has to be printed hotter than typical PLA and extrusion multiplier should be increased to around 145% to compensate for the underextrusion.
+                        </p>
+                    
+                        <p>
+                            This is because TPU is much more flexible than PLA and is prone to clogging. A common analogy would be trying to push a thin string though a tube. If the string were to be pushed too fast, it would buckle inside the tube and jam up.
+                            
+                            This issue is especially prevalent in bowden style printers, where the extruder motor is far away from the hotend, meaning that it is more likely that the filament can jam up inside the tube or extruder assembly if either the printing speed is too high, or retraction is enabled.
+                        </p>
+                    
+                        <p>
+                            After a few prints with this material, i found out that TPU tends to have poor horizontal layer adhesion if the extrusion multiplier is not turned up to around 145%. Also, if printing temperature is too high, stringing will become a huge issue since TPU strings are much harder to clean up than PLA strings, which snap off when pulled
+                        </p>
+                    
+                    
+				    </div>
+				<div id="footer">
+				Copyright &copy; Jovan Peh
+				</div>
+			</div>
+                
+        </div>
+
+	</body>
+
+</html>

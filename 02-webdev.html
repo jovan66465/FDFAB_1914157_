@@ -1,0 +1,107 @@
+<!DOCTYPE html>	
+<html>
+
+	<head>
+		<title>My website</title>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+	</head>
+
+	<body>
+		<div id="container" width="800">
+
+			<div id="header">
+			<h1>Welcome to my website!</h1>
+			</div>
+    
+            <div id="content">
+                <div id="nav">
+				<h3>Navigation</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="01-fblbsfty.html">FabLab Safety</a></li>
+                        <li><a class="selected" href="">Web development</a></li>
+                        <li><a href="03-cad.html">Computer Aided Design</a></li>
+                        <li><a href="04-3dprint.html">3D Printing</aa></li>
+                        <li><a href="05-lsrcutting.html">Laser Cutting</a></li>
+                        <li><a href="06-embeddedprog.html">Embedded programming (Arduino)</a></li>
+                        <li><a href="07-finalproject.html">Final DFAB project</a></li>
+
+
+                    </ul>
+                </div>
+
+				<div id="main">
+				    <h2>Web Development</h2>
+                    
+                    <h2>Github</h2>
+                    <p>
+                        Git add: used to add files to the staging area, before it is actually saved/ commited to the local git directory <br>
+                        Git commit: used to save all changes and save it to the local git directory <br>
+                        Git status: to check if there have yet to be staged <br>
+                        Git push: to upload all changes to online repository
+                    </p>
+           
+                    <p><img src="pics/gitworkflow.png" alt="github workflow" width="250"></p>
+        
+                    <h2>HTML(Page content)</h2>
+                    <p>
+                        <h3>How does this website work?</h3>
+                    </p>
+                        
+                    <p>
+                        The website uses a seperate html for each nav tab. I copied all the common elements of each webpage, like the nav, header and footer to all the seperate html files and added content afterwords. This means that whenever you click on the nav tab, you are redirected to the corresponding html document. <br>
+                        The highlighted selection on the nav tab is done by assigning the corresponding page name to a div which makes it bold.
+                    </p>   
+                    
+                    <h2>CSS(Page appearance)</h2>
+                    <p>
+                        Using CSS, i can customise how i want my website to look, for example, i can create a div for titles that allows me to modify how the title will look and nothing else. While HTML makes up the content, CSS determines how the website will be laid out and how it will look in the end.<br>
+                        
+                        For example CSS can:
+                        <ul>
+                            <li>Make containers and define their size and position in the webpage</li>
+                            <li>Add padding to the left and right of the screen</li>
+                            <div id="backgrounddemo">
+                            <li>Change background colour of text</li>
+                            </div>
+                            <div id="textcolourdemo">
+                            <li>Change colour of text</li>
+                            </div>
+                            <li>Change how the text appears on your screen</li>
+                            <li>
+                                <ul>
+                                    <li><p style="font-family:'Courier New'">Change text font</p></li>
+                                    <li><p style="font-size:30px">Change the size of text</p></li>
+                                    <li><b>make it bold</b></li>
+                                    <li><i>make it italic</i></li>
+                                    <li><mark>highlight</mark> certain parts of text</li>
+                                    <li><del>strikethrough</del> selected text</li>
+                                </ul>
+                            </li>
+                            <li>
+                                It is also possible to remove the dots from a list, which comes in useful in the navigation tab.
+                                <div id="removelistdotsdemo">
+                                    <ul>
+                                        <li>example one</li>
+                                        <li>example two</li>
+                                        <li>example three</li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                        
+                    </p>
+                    
+                
+				</div>
+				<div id="footer">
+				Copyright &copy; Jovan Peh
+				</div>
+			</div>
+                
+        </div>
+
+	</body>
+
+</html>
