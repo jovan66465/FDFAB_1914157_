@@ -34,6 +34,189 @@
 				
 					<h1>EP1001 Final project</h1>
 					
+					<h2>Ideation</h2>
+					
+					<p>
+						During one of my holidays, i got to witness a dispute due to a false start when i was working as a drone spotter over at science centre. Due to the lack of evidence, the organisers had to give the benefit of doubt to this participant despite 3 other people witnessing this happen. This could have been prevented if there was some sort of monitoring system to see if the go signal has been sent.
+					</p>
+					
+					<p>
+						Design goals:
+						<ul>
+						<li>Firstly, the stand must be able to countdown to zero (3,2,1,Go), preferably audibly as well.</li>
+						<li>Secondly, the stand must also be able to determine, within a few milliseconds, if the drone has lifted off prematurely and warn the user.</li>
+						<li>Thirdly, the start button must be easily accessable by the user while minimising close contact with propellers for safety reasons.</li>
+						</ul>
+					</p>
+					
+					<p>
+						<img src="pics/finalproject/prototype1.gif" alt="pic 1" width="250">
+						<img src="pics/finalproject/prototype2.gif" alt="pic 1" width="250">
+					</p>
+					
+					<p>
+						<img src="pics/finalproject/cnc1.jpeg" alt="pic 1" width="250">
+					</p>
+					
+					<p>
+						Unfortunately, I didn't take pictures of removing the tabs and sanding the pieces as my classmates were all busy at that time. Anyways, after doing these, I did a test fit, which confirmed that my racer does fit.  <br>
+						<img src="pics/finalproject/cnc2.jpeg" alt="pic 1" width="250"><br>
+						
+						However, after doing another test fit at home with the battery attached, I found out that the batteries interfere with the stand. Therefore, I chose to use another drone for the rest of my test fitting.
+					</p>
+					
+					<p>
+						After I printed the switch mount and buzzer/LED indicator mount, I wired those up to the attiny board for further testing. <br>
+						<img src="pics/finalproject/cnc3.jpeg" alt="pic 1" width="250"><br>
+						I chose to wire the buzzer and LED seperately to avoid sounding the error signal repeatedly, which can be quite irritating during a race if triggered.
+					</p>
+					
+					<p>
+						<img src="pics/finalproject/cnc4.jpeg" alt="pic 1" width="250">
+					</p>
+					
+					<p>
+						After adjusting the switch to the proper location, I was able to get the switch to trigger when the drone is seated on the stand. <br>
+						<img src="pics/finalproject/cnc5.jpeg" alt="pic 1" width="250">
+					</p>
+					
+					<p>
+						As I potentially need to sense an event during a countdown, i need to make use of interrupts in order to ensure that the takeoff is sensed reliably every time. Otherwise, if statements may miss the moment where the drone lifts off while being busy processing a delay.<br>
+						Taking a look at online guides, the only external interrupt that is available to the attiny85 is int0 (pin 2), so I attached an interrupt named blink to pin 2, with a falling edge trigger, meaning that the ISR will trigger when the drone lifts off the sense switch.
+					</p>
+					
+					<p>
+						<table>
+							
+							<pre>
+								<code>
+#define LEDPIN 4
+#define SWPIN 3
+#define INTPIN 2
+#define BUZZPIN 1
+
+volatile boolean flag = false;
+
+boolean takeoffallowed = false, launch = false;
+
+void setup()
+{
+pinMode(LEDPIN,OUTPUT);
+pinMode(BUZZPIN,OUTPUT);
+pinMode(SWPIN,INPUT_PULLUP);
+pinMode(INTPIN,INPUT_PULLUP);
+attachInterrupt(digitalPinToInterrupt(FALLING), blink, LOW);
+}
+								</code>
+							</pre>
+						</table>
+					</p>
+				
+					<p>
+						Below: Error LED shown when drone does a false start.
+						<img src="pics/finalproject/prototype3.gif" alt="pic 1" width="250">
+					</p>
+			
+					<t>Final code:</t>
+					<pre>
+						<code>
+#define LEDPIN 4
+#define SWPIN 3
+#define INTPIN 2
+#define BUZZPIN 1
+
+volatile boolean flag = false;
+
+boolean takeoffallowed = false, launch = false;
+
+void setup() 
+{
+  pinMode(LEDPIN,OUTPUT);
+  pinMode(BUZZPIN,OUTPUT);
+  pinMode(SWPIN,INPUT_PULLUP);
+  pinMode(INTPIN,INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(FALLING), blink, LOW);
+}
+
+void loop() 
+{
+  if(digitalRead(SWPIN)==0)
+  {
+    launch = true;
+    digitalWrite(LEDPIN,1);
+    digitalWrite(BUZZPIN,1);
+    delay(500);
+    digitalWrite(LEDPIN,0);
+    digitalWrite(BUZZPIN,0);
+    delay(500);
+    
+    digitalWrite(LEDPIN,1);
+    digitalWrite(BUZZPIN,1);
+    delay(500);
+    digitalWrite(LEDPIN,0);
+    digitalWrite(BUZZPIN,0);
+    delay(500);
+    
+    digitalWrite(LEDPIN,1);
+    digitalWrite(BUZZPIN,1);
+    delay(500);
+    digitalWrite(LEDPIN,0);
+    digitalWrite(BUZZPIN,0);
+    delay(500);
+    
+    digitalWrite(LEDPIN,1);
+    digitalWrite(BUZZPIN,1);
+    delay(1000);
+    digitalWrite(LEDPIN,0);
+    digitalWrite(BUZZPIN,0);
+    takeoffallowed = true;
+  }
+  
+  if(takeoffallowed == false && launch == true)
+  {
+    digitalWrite(LEDPIN,1);
+    digitalWrite(BUZZPIN,1);
+    delay(100);
+    digitalWrite(LEDPIN,0);
+    digitalWrite(BUZZPIN,0);
+    delay(100);
+    
+    digitalWrite(LEDPIN,1);
+    digitalWrite(BUZZPIN,1);
+    delay(100);
+    digitalWrite(LEDPIN,0);
+    digitalWrite(BUZZPIN,0);
+    delay(1000);
+  }
+  else if (takeoffallowed == true && launch == true)
+  {
+    digitalWrite(LEDPIN,1);
+    delay(100);
+    digitalWrite(LEDPIN,0);
+    delay(100);
+
+    digitalWrite(LEDPIN,1);
+    delay(100);
+    digitalWrite(LEDPIN,0);
+    delay(100);
+
+    digitalWrite(LEDPIN,1);
+    delay(100);
+    digitalWrite(LEDPIN,0);
+    delay(100);
+    
+    while(1);
+  }
+}
+
+void blink()
+{
+  takeoffallowed = false;
+}
+						</code>
+					</pre>
+					
+					
 				</div>
 
 				<div id="footer">
