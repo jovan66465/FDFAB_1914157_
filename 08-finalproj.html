@@ -59,6 +59,11 @@
 					</p>
 					
 					<p>
+						<iframe src="https://myhub.autodesk360.com/ue2c04282/shares/public/SH56a43QTfd62c1cd968135d90ac48c64ef9?mode=embed" width="500" height="300" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"  frameborder="0"></iframe>
+						<iframe src="https://myhub.autodesk360.com/ue2c04282/shares/public/SH56a43QTfd62c1cd96891641d43993fc497?mode=embed" width="500" height="300" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"  frameborder="0"></iframe>
+					</p>
+					
+					<p>
 						Unfortunately, I didn't take pictures of removing the tabs and sanding the pieces as my classmates were all busy at that time. Anyways, after doing these, I did a test fit, which confirmed that my racer does fit.  <br>
 						<img src="pics/finalproject/cnc2.jpeg" alt="pic 1" width="250"><br>
 						
@@ -86,7 +91,6 @@
 					</p>
 					
 					<p>
-						<table>
 							
 							<pre>
 								<code>
@@ -109,7 +113,6 @@ attachInterrupt(digitalPinToInterrupt(FALLING), blink, LOW);
 }
 								</code>
 							</pre>
-						</table>
 					</p>
 				
 					<p>
@@ -117,7 +120,7 @@ attachInterrupt(digitalPinToInterrupt(FALLING), blink, LOW);
 						<img src="pics/finalproject/prototype3.gif" alt="pic 1" width="250">
 					</p>
 			
-					<t>Final code:</t>
+					<t>First code:
 					<pre>
 						<code>
 #define LEDPIN 4
@@ -215,8 +218,166 @@ void blink()
 }
 						</code>
 					</pre>
-					
-					
+				
+				<p>
+					However, I realised during vigourous troubleshooting that i didn't actually need to use interrupts. So, i made the attiny check if the switch is pressed after the countdown was complete.<br>This is the result:		
+				</p>
+				
+				<pre>
+					<code>
+						
+#define LEDPIN 4
+#define SWPIN 3
+#define INTPIN 2
+#define BUZZPIN 1
+
+volatile boolean flag = false;
+
+void setup() 
+{
+  pinMode(LEDPIN,OUTPUT);
+  pinMode(BUZZPIN,OUTPUT);
+  pinMode(SWPIN,INPUT_PULLUP);
+  pinMode(INTPIN,INPUT);
+
+  tone(BUZZPIN, 400, 500);
+  delay(100);
+  tone(BUZZPIN, 600, 500);
+  delay(100);
+  tone(BUZZPIN, 800, 500);
+  delay(100);
+  tone(BUZZPIN, 10000, 500);
+  
+}
+
+void loop() 
+{
+  if(digitalRead(SWPIN)==0)
+  {
+    digitalWrite(LEDPIN,1);
+    digitalWrite(BUZZPIN,1);
+    delay(500);
+    digitalWrite(LEDPIN,0);
+    digitalWrite(BUZZPIN,0);
+    delay(500);
+    
+    digitalWrite(LEDPIN,1);
+    digitalWrite(BUZZPIN,1);
+    delay(500);
+    digitalWrite(LEDPIN,0);
+    digitalWrite(BUZZPIN,0);
+    delay(500);
+    
+    digitalWrite(LEDPIN,1);
+    digitalWrite(BUZZPIN,1);
+    delay(500);
+    digitalWrite(LEDPIN,0);
+    digitalWrite(BUZZPIN,0);
+    delay(500);
+    
+    digitalWrite(LEDPIN,1);
+    digitalWrite(BUZZPIN,1);
+    delay(1000);
+    digitalWrite(LEDPIN,0);
+    digitalWrite(BUZZPIN,0);
+
+    if(digitalRead(INTPIN)==0)
+    {
+      digitalWrite(LEDPIN,1);
+      delay(100);
+      digitalWrite(LEDPIN,0);
+      delay(100);
+    
+      digitalWrite(LEDPIN,1);
+      delay(100);
+      digitalWrite(LEDPIN,0);
+      delay(100);
+    }
+
+    else
+    {
+      while(1)
+      {
+        digitalWrite(LEDPIN,1);
+        delay(100);
+        digitalWrite(LEDPIN,0);
+        delay(100);
+    
+        digitalWrite(LEDPIN,1);
+        delay(100);
+        digitalWrite(LEDPIN,0);
+        delay(100);
+      }
+    }
+  }
+  
+ 
+}
+					</code>
+				</pre>
+				
+				<p>
+					This, in combination with the new simplified board i milled, made the project more reliable as it used vertical pin headers that were less prone to fatigeing the wires.		
+				</p>
+						
+				<p>
+					For the v2 board, i got rid of the built in button and led, breaking out all 4 io pins i need (led, buzzer, sensesw and startsw)<br>
+					<img src="pics/finalproject/v2schematiccad.jpg" alt="pic 1" width="250">
+					<img src="pics/finalproject/v2pcbcad.jpeg" alt="pic 1" width="250">
+				</p>
+						
+				<p>
+					Milling v2 board gif:<br>
+					<img src="pics/finalproject/v2ncviewer.jpg" alt="pic 1" width="250">
+					<img src="pics/finalproject/millingv2.gif" alt="pic 1" width="250">
+				</p>
+						
+				<p>
+					A quick comparison between the v1 and v2 board.<br>
+					<img src="pics/finalproject/oldv1pcb.jpeg" alt="pic 1" width="250">
+					<img src="pics/finalproject/milledpopulatedv2pcb.jpeg" alt="pic 1" width="250">
+				</p>
+						
+				<p>
+					During the session, i also knocked out a hole in the back to mount this switch panel.
+					<img src="pics/finalproject/mountedpanel.jpeg" alt="pic 1" width="250">
+				</p>
+						
+				<p>
+					I decided to rewire the indicator led on the back to neopixel leds to the front to make it more asthetically pleasing.
+				</p>
+						
+				<p>
+					Since the individual addressable leds only need 1 output pin, i can simply swap out the wiring. Furthermore, i still had 3/4 of flash memory left on the tiny85, so that won't be a problem.<br>
+					Turns out if i only power a few leds at a time, i would not need a high current supply, and i can use the 5v rail coming from an uno for my initial tests. So that was what i did.<br>
+					<img src="pics/finalproject/neotest.gif" alt="pic 1" width="250">
+				</p>
+						
+				<p>
+					After trimming the strip to 9 leds and rewiring the strip to the v2 pcb, i mounted it to the front, hoping that the fpv camera on the drone would be able to pick up some glare.<br>
+					<img src="pics/finalproject/addedneostrip.jpeg" alt="pic 1" width="250"><br>
+					I also added an LM2596 Switched mode buck converter for reliable power up to 35VDC, as most users of the project would have access to a 2 to 6 cell li-po with a JST connector.
+				</p>
+						
+				<p>
+					These are the heroshots for the project. I may add some printed covers for the wiring if time permits. I'm also thinking of printing some feet to allow the stand to be spiked down into grass.<br>
+					<img src="pics/finalproject/heroshot.jpeg" alt="pic 1" width="250">
+					<img src="pics/finalproject/heroshotback.jpeg" alt="pic 1" width="250">
+				</p>
+						
+				<p>
+					<video controls width="400">
+
+    				<source src="pics/finalproject/demowtext.mp4">
+
+    				
+    				Sorry, your browser doesn't support embedded videos.
+					</video>		
+				</p>
+						
+				<p>
+					<img src="pics/finalproject/diagram.jpg" alt="pic 1" width="500">
+				</p>		
 				</div>
 
 				<div id="footer">
